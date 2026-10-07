@@ -68,9 +68,11 @@ def ask(question: str, default: str = "", secret: bool = False) -> str:
 
 
 def confirm(question: str, default: bool = True) -> bool:
+    # Parentheses, not brackets: rich reads "[y/N]" as a closing markup tag and
+    # swallows the hint entirely.
     hint = "Y/n" if default else "y/N"
     while True:
-        a = ask(f"{question} [grey62][{hint}][/]").lower()
+        a = ask(f"{question} [grey62]({hint})[/]").lower()
         if not a:
             return default
         if a in ("y", "yes", "o", "oui"):
